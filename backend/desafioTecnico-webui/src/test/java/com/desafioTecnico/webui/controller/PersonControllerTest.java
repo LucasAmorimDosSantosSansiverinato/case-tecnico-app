@@ -39,9 +39,10 @@ class PersonControllerTest {
     @MockBean GetAllPersonsQueryHandler getAllHandler;
 
     private PersonResponse buildPersonResponse(String id, String name) {
-        AddressResponse address = new AddressResponse(
-                "01310100", "Av Paulista", "Bela Vista", "Sao Paulo", "SP", null, "100"
-        );
+        var address = new AddressResponse();
+        address.cep = "01310100"; address.street = "Av Paulista";
+        address.neighborhood = "Bela Vista"; address.city = "Sao Paulo";
+        address.state = "SP"; address.number = "100";
         return new PersonResponse(
                 id, name, "529.982.247-25", "maria@example.com",
                 LocalDate.of(1990, 1, 1), address, "msilva1", LocalDateTime.now()

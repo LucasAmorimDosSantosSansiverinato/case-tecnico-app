@@ -4,43 +4,23 @@ import com.desafioTecnico.domain.vo.Address;
 
 public class AddressResponse {
 
-    private final String cep;
-    private final String street;
-    private final String neighborhood;
-    private final String city;
-    private final String state;
-    private final String complement;
-    private final String number;
-
-    public AddressResponse(String cep, String street, String neighborhood,
-                           String city, String state,
-                           String complement, String number) {
-        this.cep = cep;
-        this.street = street;
-        this.neighborhood = neighborhood;
-        this.city = city;
-        this.state = state;
-        this.complement = complement;
-        this.number = number;
-    }
+    public String cep;
+    public String street;
+    public String neighborhood;
+    public String city;
+    public String state;
+    public String complement;
+    public String number;
 
     public static AddressResponse from(Address address) {
-        return new AddressResponse(
-                address.getCep(),
-                address.getStreet(),
-                address.getNeighborhood(),
-                address.getCity(),
-                address.getState(),
-                address.getComplement(),
-                address.getNumber()
-        );
+        var r = new AddressResponse();
+        r.cep          = address.getCep();
+        r.street       = address.getStreet();
+        r.neighborhood = address.getNeighborhood();
+        r.city         = address.getCity();
+        r.state        = address.getState();
+        r.complement   = address.getComplement();
+        r.number       = address.getNumber();
+        return r;
     }
-
-    public String getCep()          { return cep; }
-    public String getStreet()       { return street; }
-    public String getNeighborhood() { return neighborhood; }
-    public String getCity()         { return city; }
-    public String getState()        { return state; }
-    public String getComplement()   { return complement; }
-    public String getNumber()       { return number; }
 }
