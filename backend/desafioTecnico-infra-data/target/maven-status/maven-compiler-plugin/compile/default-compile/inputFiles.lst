@@ -1,3 +1,4 @@
-C:\Users\Lucas\GITHUB\case-tecnico-app\backend\desafioTecnico-infra-data\src\main\java\com\desafioTecnico\infra\data\entity\PersonJpaEntity.java
-C:\Users\Lucas\GITHUB\case-tecnico-app\backend\desafioTecnico-infra-data\src\main\java\com\desafioTecnico\infra\data\repository\PersonJpaRepository.java
-C:\Users\Lucas\GITHUB\case-tecnico-app\backend\desafioTecnico-infra-data\src\main\java\com\desafioTecnico\infra\data\adapter\PersonRepositoryAdapter.java
+C:\Users\Lucas\GITHUB\case-tecnico-app\backend\desafioTecnico-infra-data\src\main\java\com\desafioTecnico\infra\data\cache\PessoaCacheService.java
+C:\Users\Lucas\GITHUB\case-tecnico-app\backend\desafioTecnico-infra-data\src\main\java\com\desafioTecnico\infra\data\adaptador\AdaptadorRepositorioPessoa.java
+C:\Users\Lucas\GITHUB\case-tecnico-app\backend\desafioTecnico-infra-data\src\main\java\com\desafioTecnico\infra\data\entidade\EntidadePessoaJpa.java
+C:\Users\Lucas\GITHUB\case-tecnico-app\backend\desafioTecnico-infra-data\src\main\java\com\desafioTecnico\infra\data\contexto\ContextoPessoaJpa.java

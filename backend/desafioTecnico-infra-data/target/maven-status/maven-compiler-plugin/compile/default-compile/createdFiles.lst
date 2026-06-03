@@ -1,3 +1,4 @@
-com\desafioTecnico\infra\data\adapter\PersonRepositoryAdapter.class
-com\desafioTecnico\infra\data\entity\PersonJpaEntity.class
-com\desafioTecnico\infra\data\repository\PersonJpaRepository.class
+com\desafioTecnico\infra\data\entidade\EntidadePessoaJpa.class
+com\desafioTecnico\infra\data\adaptador\AdaptadorRepositorioPessoa.class
+com\desafioTecnico\infra\data\contexto\ContextoPessoaJpa.class
+com\desafioTecnico\infra\data\cache\PessoaCacheService.class

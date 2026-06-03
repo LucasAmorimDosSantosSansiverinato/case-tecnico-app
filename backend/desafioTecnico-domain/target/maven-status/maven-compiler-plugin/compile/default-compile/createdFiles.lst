@@ -1,9 +1,4 @@
-com\desafioTecnico\domain\vo\Address.class
-com\desafioTecnico\domain\vo\Login.class
-com\desafioTecnico\domain\exception\DomainException.class
-com\desafioTecnico\domain\vo\Address$Builder.class
-com\desafioTecnico\domain\vo\Document.class
-com\desafioTecnico\domain\entity\Person$Builder.class
-com\desafioTecnico\domain\repository\PersonRepository.class
-com\desafioTecnico\domain\entity\Person.class
-com\desafioTecnico\domain\vo\PersonId.class
+com\desafioTecnico\domain\entidade\Pessoa$Builder.class
+com\desafioTecnico\domain\excecao\ExcecaoDominio.class
+com\desafioTecnico\domain\entidade\Pessoa.class
+com\desafioTecnico\domain\interface_\IRepositorioPessoa.class

@@ -1,5 +1,1 @@
-com\desafioTecnico\domain\AddressTest.class
-com\desafioTecnico\domain\DocumentTest.class
-com\desafioTecnico\domain\LoginTest.class
-com\desafioTecnico\domain\PersonTest.class
-com\desafioTecnico\domain\PersonIdTest.class
+com\desafioTecnico\domain\PessoaTest.class

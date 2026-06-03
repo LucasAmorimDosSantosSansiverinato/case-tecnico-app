@@ -1,10 +1,9 @@
 com\desafioTecnico\webui\Application.class
 com\desafioTecnico\webui\config\ApplicationConfig.class
-com\desafioTecnico\webui\handler\GlobalExceptionHandler.class
 com\desafioTecnico\webui\config\CorsConfig$1.class
+com\desafioTecnico\webui\dto\RequisicaoCadastro.class
+com\desafioTecnico\webui\excecao\HandlerExcecaoGlobal.class
 com\desafioTecnico\webui\config\CorsConfig.class
 com\desafioTecnico\webui\controller\PersonController.class
 com\desafioTecnico\webui\controller\AddressController.class
 com\desafioTecnico\webui\config\CacheConfig.class
-com\desafioTecnico\webui\cache\PersonCacheService.class
-com\desafioTecnico\webui\dto\RegisterPersonRequest.class

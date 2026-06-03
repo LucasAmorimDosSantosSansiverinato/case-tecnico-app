@@ -1,7 +1,6 @@
 package com.desafioTecnico.webui.controller;
 
-import com.desafioTecnico.application.port.AddressServicePort;
-import com.desafioTecnico.domain.vo.Address;
+import com.desafioTecnico.application.interface_.IPortaServicoEndereco;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -15,25 +14,25 @@ public class AddressController {
 
     private static final Logger log = LoggerFactory.getLogger(AddressController.class);
 
-    private final AddressServicePort addressService;
+    private final IPortaServicoEndereco servicoEndereco;
 
-    public AddressController(AddressServicePort addressService) {
-        this.addressService = addressService;
+    public AddressController(IPortaServicoEndereco servicoEndereco) {
+        this.servicoEndereco = servicoEndereco;
     }
 
     @GetMapping("/{cep}")
-    public ResponseEntity<?> findByCep(@PathVariable String cep) {
-        String digits = cep.replaceAll("[^0-9]", "");
-        log.info("[BACKEND] GET /api/v1/address/{} - buscando CEP", digits);
+    public ResponseEntity<?> buscarPorCep(@PathVariable String cep) {
+        String digitos = cep.replaceAll("[^0-9]", "");
+        log.info("[BACKEND] GET /api/v1/address/{} - buscando CEP", digitos);
 
-        Address address = addressService.findByCep(digits);
+        Map<String, String> dados = servicoEndereco.buscarPorCep(digitos);
 
         return ResponseEntity.ok(Map.of(
-                "cep", address.getCep(),
-                "street", address.getStreet() != null ? address.getStreet() : "",
-                "neighborhood", address.getNeighborhood() != null ? address.getNeighborhood() : "",
-                "city", address.getCity(),
-                "state", address.getState()
+                "cep", dados.getOrDefault("cep", ""),
+                "street", dados.getOrDefault("logradouro", ""),
+                "neighborhood", dados.getOrDefault("bairro", ""),
+                "city", dados.getOrDefault("cidade", ""),
+                "state", dados.getOrDefault("estado", "")
         ));
     }
 }

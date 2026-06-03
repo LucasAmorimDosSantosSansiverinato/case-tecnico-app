@@ -1,12 +1,12 @@
 package com.desafioTecnico.webui.config;
 
-import com.desafioTecnico.application.handler.GetAllPersonsQueryHandler;
-import com.desafioTecnico.application.handler.GetPersonByIdQueryHandler;
-import com.desafioTecnico.application.handler.GetPersonByLoginQueryHandler;
-import com.desafioTecnico.application.handler.RegisterPersonCommandHandler;
-import com.desafioTecnico.application.port.AddressServicePort;
-import com.desafioTecnico.application.port.LoginGeneratorPort;
-import com.desafioTecnico.domain.repository.PersonRepository;
+import com.desafioTecnico.application.interface_.IPortaGeradorLogin;
+import com.desafioTecnico.application.interface_.IPortaServicoEndereco;
+import com.desafioTecnico.application.mediator.handler.HandlerCadastrarPessoa;
+import com.desafioTecnico.application.mediator.handler.HandlerQueryPorId;
+import com.desafioTecnico.application.mediator.handler.HandlerQueryPorLogin;
+import com.desafioTecnico.application.mediator.handler.HandlerTodasPessoas;
+import com.desafioTecnico.domain.interface_.IRepositorioPessoa;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
@@ -20,26 +20,26 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public RegisterPersonCommandHandler registerPersonCommandHandler(
-            PersonRepository personRepository,
-            LoginGeneratorPort loginGeneratorPort,
-            AddressServicePort addressServicePort
+    public HandlerCadastrarPessoa HandlerCadastrarPessoa(
+            IRepositorioPessoa IRepositorioPessoa,
+            IPortaGeradorLogin IPortaGeradorLogin,
+            IPortaServicoEndereco IPortaServicoEndereco
     ) {
-        return new RegisterPersonCommandHandler(personRepository, loginGeneratorPort, addressServicePort);
+        return new HandlerCadastrarPessoa(IRepositorioPessoa, IPortaGeradorLogin, IPortaServicoEndereco);
     }
 
     @Bean
-    public GetPersonByIdQueryHandler getPersonByIdQueryHandler(PersonRepository personRepository) {
-        return new GetPersonByIdQueryHandler(personRepository);
+    public HandlerQueryPorId HandlerQueryPorId(IRepositorioPessoa IRepositorioPessoa) {
+        return new HandlerQueryPorId(IRepositorioPessoa);
     }
 
     @Bean
-    public GetAllPersonsQueryHandler getAllPersonsQueryHandler(PersonRepository personRepository) {
-        return new GetAllPersonsQueryHandler(personRepository);
+    public HandlerTodasPessoas HandlerTodasPessoas(IRepositorioPessoa IRepositorioPessoa) {
+        return new HandlerTodasPessoas(IRepositorioPessoa);
     }
 
     @Bean
-    public GetPersonByLoginQueryHandler getPersonByLoginQueryHandler(PersonRepository personRepository) {
-        return new GetPersonByLoginQueryHandler(personRepository);
+    public HandlerQueryPorLogin HandlerQueryPorLogin(IRepositorioPessoa IRepositorioPessoa) {
+        return new HandlerQueryPorLogin(IRepositorioPessoa);
     }
 }

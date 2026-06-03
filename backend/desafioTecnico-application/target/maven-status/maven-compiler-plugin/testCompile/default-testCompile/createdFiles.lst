@@ -1,3 +1,3 @@
-com\desafioTecnico\application\handler\GetPersonByIdQueryHandlerTest.class
-com\desafioTecnico\application\handler\GetAllPersonsQueryHandlerTest.class
-com\desafioTecnico\application\handler\RegisterPersonCommandHandlerTest.class
+com\desafioTecnico\application\handler\HandlerQueryPorIdTest.class
+com\desafioTecnico\application\handler\HandlerTodasPessoasTest.class
+com\desafioTecnico\application\handler\HandlerCadastrarPessoaTest.class
