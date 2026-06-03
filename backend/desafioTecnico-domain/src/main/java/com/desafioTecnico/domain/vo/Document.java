@@ -18,6 +18,10 @@ public final class Document {
         return new Document(digits);
     }
 
+    public static Document restore(String digits) {
+        return new Document(digits);
+    }
+
     private static String normalize(String raw) {
         if (raw == null) throw new DomainException("Document is required");
         return raw.replaceAll("[^0-9]", "");

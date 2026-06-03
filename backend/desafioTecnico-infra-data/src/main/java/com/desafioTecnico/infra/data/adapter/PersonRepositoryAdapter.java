@@ -89,7 +89,7 @@ public class PersonRepositoryAdapter implements PersonRepository {
         return Person.builder()
                 .id(PersonId.of(entity.getId()))
                 .fullName(entity.getFullName())
-                .document(Document.of(entity.getDocument()))
+                .document(Document.restore(entity.getDocument()))
                 .email(entity.getEmail())
                 .birthDate(entity.getBirthDate())
                 .address(address)
