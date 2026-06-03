@@ -1,0 +1,3 @@
+com\desafioTecnico\application\handler\GetPersonByIdQueryHandlerTest.class
+com\desafioTecnico\application\handler\GetAllPersonsQueryHandlerTest.class
+com\desafioTecnico\application\handler\RegisterPersonCommandHandlerTest.class
