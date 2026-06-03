@@ -42,6 +42,11 @@ public class PersonRepositoryAdapter implements PersonRepository {
     }
 
     @Override
+    public Optional<Person> findByLogin(String login) {
+        return jpaRepository.findByLogin(login).map(this::toDomain);
+    }
+
+    @Override
     public boolean existsByLogin(String login) {
         return jpaRepository.existsByLogin(login);
     }

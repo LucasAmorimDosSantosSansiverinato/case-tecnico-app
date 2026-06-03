@@ -16,6 +16,8 @@ public interface PersonJpaRepository extends JpaRepository<PersonJpaEntity, UUID
 
     Optional<PersonJpaEntity> findByEmail(String email);
 
+    Optional<PersonJpaEntity> findByLogin(String login);
+
     boolean existsByLogin(String login);
 
     @Query("SELECT p.login FROM PersonJpaEntity p")

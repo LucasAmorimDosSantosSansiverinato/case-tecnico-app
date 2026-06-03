@@ -4,6 +4,7 @@ import com.desafioTecnico.application.command.RegisterPersonCommand;
 import com.desafioTecnico.application.dto.PersonResponse;
 import com.desafioTecnico.application.query.GetAllPersonsQuery;
 import com.desafioTecnico.application.query.GetPersonByIdQuery;
+import com.desafioTecnico.application.query.GetPersonByLoginQuery;
 import com.desafioTecnico.webui.cache.PersonCacheService;
 import com.desafioTecnico.webui.dto.RegisterPersonRequest;
 import jakarta.validation.Valid;
@@ -49,6 +50,14 @@ public class PersonController {
         log.info("[BACKEND] GET /api/v1/persons/{}", id);
         PersonResponse response = cacheService.getById(new GetPersonByIdQuery(id));
         log.info("[BACKEND] Pessoa encontrada: {}", response.getFullName());
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/login/{login}")
+    public ResponseEntity<PersonResponse> getByLogin(@PathVariable String login) {
+        log.info("[BACKEND] GET /api/v1/persons/login/{}", login);
+        PersonResponse response = cacheService.getByLogin(new GetPersonByLoginQuery(login));
+        log.info("[BACKEND] Login encontrado: {}", response.getFullName());
         return ResponseEntity.ok(response);
     }
 

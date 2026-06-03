@@ -20,5 +20,7 @@ public interface PersonRepository {
 
     List<String> findAllLogins();
 
+    Optional<Person> findByLogin(String login);
+
     List<Person> findAll();
 }

@@ -2,6 +2,7 @@ package com.desafioTecnico.webui.config;
 
 import com.desafioTecnico.application.handler.GetAllPersonsQueryHandler;
 import com.desafioTecnico.application.handler.GetPersonByIdQueryHandler;
+import com.desafioTecnico.application.handler.GetPersonByLoginQueryHandler;
 import com.desafioTecnico.application.handler.RegisterPersonCommandHandler;
 import com.desafioTecnico.application.port.AddressServicePort;
 import com.desafioTecnico.application.port.LoginGeneratorPort;
@@ -35,5 +36,10 @@ public class ApplicationConfig {
     @Bean
     public GetAllPersonsQueryHandler getAllPersonsQueryHandler(PersonRepository personRepository) {
         return new GetAllPersonsQueryHandler(personRepository);
+    }
+
+    @Bean
+    public GetPersonByLoginQueryHandler getPersonByLoginQueryHandler(PersonRepository personRepository) {
+        return new GetPersonByLoginQueryHandler(personRepository);
     }
 }
