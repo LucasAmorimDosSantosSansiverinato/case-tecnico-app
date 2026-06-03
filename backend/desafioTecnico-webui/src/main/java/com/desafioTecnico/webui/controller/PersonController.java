@@ -2,11 +2,9 @@ package com.desafioTecnico.webui.controller;
 
 import com.desafioTecnico.application.command.RegisterPersonCommand;
 import com.desafioTecnico.application.dto.PersonResponse;
-import com.desafioTecnico.application.handler.GetAllPersonsQueryHandler;
-import com.desafioTecnico.application.handler.GetPersonByIdQueryHandler;
-import com.desafioTecnico.application.handler.RegisterPersonCommandHandler;
 import com.desafioTecnico.application.query.GetAllPersonsQuery;
 import com.desafioTecnico.application.query.GetPersonByIdQuery;
+import com.desafioTecnico.webui.cache.PersonCacheService;
 import com.desafioTecnico.webui.dto.RegisterPersonRequest;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -23,16 +21,10 @@ public class PersonController {
 
     private static final Logger log = LoggerFactory.getLogger(PersonController.class);
 
-    private final RegisterPersonCommandHandler registerHandler;
-    private final GetPersonByIdQueryHandler getByIdHandler;
-    private final GetAllPersonsQueryHandler getAllHandler;
+    private final PersonCacheService cacheService;
 
-    public PersonController(RegisterPersonCommandHandler registerHandler,
-                            GetPersonByIdQueryHandler getByIdHandler,
-                            GetAllPersonsQueryHandler getAllHandler) {
-        this.registerHandler = registerHandler;
-        this.getByIdHandler = getByIdHandler;
-        this.getAllHandler = getAllHandler;
+    public PersonController(PersonCacheService cacheService) {
+        this.cacheService = cacheService;
     }
 
     @PostMapping
@@ -47,15 +39,15 @@ public class PersonController {
                 request.getComplement(),
                 request.getNumber()
         );
-        PersonResponse response = registerHandler.handle(command);
-        log.info("[BACKEND] Pessoa cadastrada com sucesso - login gerado: {}", response.getLogin());
+        PersonResponse response = cacheService.register(command);
+        log.info("[BACKEND] Cadastro realizado com sucesso - login gerado: {}", response.getLogin());
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<PersonResponse> getById(@PathVariable String id) {
         log.info("[BACKEND] GET /api/v1/persons/{}", id);
-        PersonResponse response = getByIdHandler.handle(new GetPersonByIdQuery(id));
+        PersonResponse response = cacheService.getById(new GetPersonByIdQuery(id));
         log.info("[BACKEND] Pessoa encontrada: {}", response.getFullName());
         return ResponseEntity.ok(response);
     }
@@ -63,7 +55,7 @@ public class PersonController {
     @GetMapping
     public ResponseEntity<List<PersonResponse>> getAll() {
         log.info("[BACKEND] GET /api/v1/persons - buscando todas as pessoas");
-        List<PersonResponse> response = getAllHandler.handle(new GetAllPersonsQuery());
+        List<PersonResponse> response = cacheService.getAll(new GetAllPersonsQuery());
         log.info("[BACKEND] Retornando {} pessoas do banco", response.size());
         return ResponseEntity.ok(response);
     }
