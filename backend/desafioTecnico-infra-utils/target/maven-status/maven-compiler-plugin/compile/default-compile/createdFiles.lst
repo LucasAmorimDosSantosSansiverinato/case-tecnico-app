@@ -1,0 +1,3 @@
+com\desafioTecnico\infra\utils\address\ViaCepAddressService.class
+com\desafioTecnico\infra\utils\address\ViaCepClient.class
+com\desafioTecnico\infra\utils\login\LoginGeneratorService.class

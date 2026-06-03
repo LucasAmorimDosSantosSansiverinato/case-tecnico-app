@@ -1,0 +1,3 @@
+com\desafioTecnico\infra\data\adapter\PersonRepositoryAdapter.class
+com\desafioTecnico\infra\data\entity\PersonJpaEntity.class
+com\desafioTecnico\infra\data\repository\PersonJpaRepository.class

@@ -1,0 +1,12 @@
+C:\Users\Lucas\GITHUB\Case tecnico\backend\desafioTecnico-application\src\main\java\com\desafioTecnico\application\port\LoginGeneratorPort.java
+C:\Users\Lucas\GITHUB\Case tecnico\backend\desafioTecnico-application\src\main\java\com\desafioTecnico\application\dto\AddressResponse.java
+C:\Users\Lucas\GITHUB\Case tecnico\backend\desafioTecnico-application\src\main\java\com\desafioTecnico\application\port\AddressServicePort.java
+C:\Users\Lucas\GITHUB\Case tecnico\backend\desafioTecnico-application\src\main\java\com\desafioTecnico\application\handler\RegisterPersonCommandHandler.java
+C:\Users\Lucas\GITHUB\Case tecnico\backend\desafioTecnico-application\src\main\java\com\desafioTecnico\application\interfaces\AddressServicePort.java
+C:\Users\Lucas\GITHUB\Case tecnico\backend\desafioTecnico-application\src\main\java\com\desafioTecnico\application\dto\PersonResponse.java
+C:\Users\Lucas\GITHUB\Case tecnico\backend\desafioTecnico-application\src\main\java\com\desafioTecnico\application\interfaces\LoginGeneratorPort.java
+C:\Users\Lucas\GITHUB\Case tecnico\backend\desafioTecnico-application\src\main\java\com\desafioTecnico\application\handler\GetAllPersonsQueryHandler.java
+C:\Users\Lucas\GITHUB\Case tecnico\backend\desafioTecnico-application\src\main\java\com\desafioTecnico\application\command\RegisterPersonCommand.java
+C:\Users\Lucas\GITHUB\Case tecnico\backend\desafioTecnico-application\src\main\java\com\desafioTecnico\application\handler\GetPersonByIdQueryHandler.java
+C:\Users\Lucas\GITHUB\Case tecnico\backend\desafioTecnico-application\src\main\java\com\desafioTecnico\application\query\GetAllPersonsQuery.java
+C:\Users\Lucas\GITHUB\Case tecnico\backend\desafioTecnico-application\src\main\java\com\desafioTecnico\application\query\GetPersonByIdQuery.java

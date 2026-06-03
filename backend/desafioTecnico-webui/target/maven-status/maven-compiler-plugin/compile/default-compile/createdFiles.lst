@@ -1,0 +1,6 @@
+com\desafioTecnico\webui\Application.class
+com\desafioTecnico\webui\config\ApplicationConfig.class
+com\desafioTecnico\webui\handler\GlobalExceptionHandler.class
+com\desafioTecnico\webui\config\CorsConfig.class
+com\desafioTecnico\webui\controller\PersonController.class
+com\desafioTecnico\webui\dto\RegisterPersonRequest.class
