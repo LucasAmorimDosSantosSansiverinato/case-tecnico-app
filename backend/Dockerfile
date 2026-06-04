@@ -5,6 +5,7 @@ COPY desafioTecnico-domain/pom.xml desafioTecnico-domain/
 COPY desafioTecnico-application/pom.xml desafioTecnico-application/
 COPY desafioTecnico-infra-data/pom.xml desafioTecnico-infra-data/
 COPY desafioTecnico-infra-utils/pom.xml desafioTecnico-infra-utils/
+COPY desafioTecnico-ioc/pom.xml desafioTecnico-ioc/
 COPY desafioTecnico-webui/pom.xml desafioTecnico-webui/
 RUN mvn dependency:go-offline -q
 COPY . .
