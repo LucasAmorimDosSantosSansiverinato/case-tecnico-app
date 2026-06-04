@@ -1,6 +1,4 @@
-com\desafioTecnico\infra\utils\validacao\ValidadorLogin.class
 com\desafioTecnico\infra\utils\endereco\EnderecoViaCepService.class
-com\desafioTecnico\infra\utils\validacao\ValidadorEndereco.class
 com\desafioTecnico\infra\utils\login\GeradorLoginService.class
 com\desafioTecnico\infra\utils\endereco\ClienteViaCep.class
 com\desafioTecnico\infra\utils\validacao\ValidadorCpf.class

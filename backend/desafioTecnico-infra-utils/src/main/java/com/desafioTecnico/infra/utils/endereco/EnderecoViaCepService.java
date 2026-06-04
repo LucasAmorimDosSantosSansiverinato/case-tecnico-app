@@ -1,6 +1,6 @@
 package com.desafioTecnico.infra.utils.endereco;
 
-import com.desafioTecnico.application.interface_.IPortaServicoEndereco;
+import com.desafioTecnico.application.interfaces.IPortaServicoEndereco;
 import com.desafioTecnico.domain.excecao.ExcecaoDominio;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;

@@ -19,20 +19,16 @@
         e são fiadas pelo Spring DI em runtime.
     -->
     <dependencies>
-        <!-- Camada que webui conhece em compile time -->
+        <!-- Application: contratos, DTOs, commands e queries usados pelos controllers -->
         <dependency>
             <groupId>com.desafioTecnico</groupId>
             <artifactId>desafioTecnico-application</artifactId>
         </dependency>
 
-        <!-- Módulos de infra: presentes no classpath para Spring DI em runtime -->
+        <!-- IoC: registra os beans e resolve as implementações das interfaces -->
         <dependency>
             <groupId>com.desafioTecnico</groupId>
-            <artifactId>desafioTecnico-infra-data</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.desafioTecnico</groupId>
-            <artifactId>desafioTecnico-infra-utils</artifactId>
+            <artifactId>desafioTecnico-ioc</artifactId>
         </dependency>
 
         <!-- Spring Boot starters necessários para o módulo executável -->
@@ -59,6 +55,24 @@
         <dependency>
             <groupId>com.github.ben-manes.caffeine</groupId>
             <artifactId>caffeine</artifactId>
+        </dependency>
+        <!-- JWT para validação do service token vindo do BFF -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>0.12.6</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>0.12.6</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>0.12.6</version>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

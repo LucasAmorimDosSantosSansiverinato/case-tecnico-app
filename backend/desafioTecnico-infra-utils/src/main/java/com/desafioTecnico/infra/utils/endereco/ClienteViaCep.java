@@ -3,6 +3,7 @@ package com.desafioTecnico.infra.utils.endereco;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+// Representa a resposta da API ViaCEP
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ClienteViaCep {
 

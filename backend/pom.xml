@@ -43,6 +43,7 @@
         <module>desafioTecnico-application</module>
         <module>desafioTecnico-infra-data</module>
         <module>desafioTecnico-infra-utils</module>
+        <module>desafioTecnico-ioc</module>
         <module>desafioTecnico-webui</module>
     </modules>
 
@@ -66,6 +67,11 @@
             <dependency>
                 <groupId>com.desafioTecnico</groupId>
                 <artifactId>desafioTecnico-infra-utils</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.desafioTecnico</groupId>
+                <artifactId>desafioTecnico-ioc</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

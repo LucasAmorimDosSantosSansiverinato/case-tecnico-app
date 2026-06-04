@@ -1,48 +1,86 @@
 package com.desafioTecnico.domain.entidade;
 
 import com.desafioTecnico.domain.excecao.ExcecaoDominio;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
+@Entity
+@Table(name = "persons")
 public class Pessoa {
 
+    @Id
+    @Column(name = "id", nullable = false, updatable = false)
     private UUID id;
+
+    @Column(name = "full_name", nullable = false)
     private String nomeCompleto;
+
+    @Column(name = "document", nullable = false, unique = true)
     private String cpf;
+
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
+
+    @Column(name = "birth_date", nullable = false)
     private LocalDate dataNascimento;
+
+    @Column(name = "cep", nullable = false)
     private String cep;
+
+    @Column(name = "street", nullable = false)
     private String logradouro;
+
+    @Column(name = "neighborhood")
     private String bairro;
+
+    @Column(name = "city", nullable = false)
     private String cidade;
+
+    @Column(name = "state", nullable = false)
     private String estado;
+
+    @Column(name = "complement")
     private String complemento;
+
+    @Column(name = "number")
     private String numero;
+
+    @Column(name = "login", nullable = false, unique = true, length = 7)
     private String login;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime criadoEm;
 
-    private Pessoa(Builder builder) {
-        this.id = builder.id;
-        this.nomeCompleto = builder.nomeCompleto;
-        this.cpf = builder.cpf;
-        this.email = builder.email;
-        this.dataNascimento = builder.dataNascimento;
-        this.cep = builder.cep;
-        this.logradouro = builder.logradouro;
-        this.bairro = builder.bairro;
-        this.cidade = builder.cidade;
-        this.estado = builder.estado;
-        this.complemento = builder.complemento;
-        this.numero = builder.numero;
-        this.login = builder.login;
-        this.criadoEm = builder.criadoEm;
-    }
+    
+    protected Pessoa() {}
 
-    public static Builder builder() {
-        return new Builder();
+    public Pessoa(UUID id, String nomeCompleto, String cpf, String email,
+                  LocalDate dataNascimento, String cep, String logradouro,
+                  String bairro, String cidade, String estado,
+                  String complemento, String numero, String login,
+                  LocalDateTime criadoEm) {
+
+        if (id == null) throw new ExcecaoDominio("Id é obrigatório");
+
+        this.id = id;
+        this.criadoEm = criadoEm != null ? criadoEm : LocalDateTime.now();
+
+        setNomeCompleto(nomeCompleto);
+        setCpf(cpf);
+        setEmail(email);
+        setDataNascimento(dataNascimento);
+        setCep(cep);
+        setLogradouro(logradouro);
+        setBairro(bairro);
+        setCidade(cidade);
+        setEstado(estado);
+        setComplemento(complemento);
+        setNumero(numero);
+        setLogin(login);
     }
 
     public UUID getId()                  { return id; }
@@ -60,6 +98,55 @@ public class Pessoa {
     public String getLogin()             { return login; }
     public LocalDateTime getCriadoEm()   { return criadoEm; }
 
+    public void setNomeCompleto(String nomeCompleto) {
+        if (nomeCompleto == null || nomeCompleto.isBlank())
+            throw new ExcecaoDominio("Nome completo é obrigatório");
+        String normalizado = nomeCompleto.trim().replaceAll("\\s+", " ");
+        if (!normalizado.matches("[a-zA-Z ]+"))
+            throw new ExcecaoDominio("Nome completo deve conter apenas letras e espaços (sem acentos ou caracteres especiais)");
+        if (normalizado.split(" ").length < 2)
+            throw new ExcecaoDominio("Nome completo deve conter pelo menos nome e sobrenome");
+        this.nomeCompleto = normalizado;
+    }
+
+    public void setCpf(String cpf) {
+        if (cpf == null || cpf.isBlank()) throw new ExcecaoDominio("CPF é obrigatório");
+        this.cpf = cpf;
+    }
+
+    public void setEmail(String email) {
+        if (email == null || email.isBlank()) throw new ExcecaoDominio("E-mail é obrigatório");
+        if (!email.matches("^[\\w._%+\\-]+@[\\w.\\-]+\\.[a-zA-Z]{2,}$"))
+            throw new ExcecaoDominio("Formato de e-mail inválido");
+        this.email = email.toLowerCase().trim();
+    }
+
+    public void setDataNascimento(LocalDate dataNascimento) {
+        if (dataNascimento == null) throw new ExcecaoDominio("Data de nascimento é obrigatória");
+        if (dataNascimento.isAfter(LocalDate.now()))
+            throw new ExcecaoDominio("Data de nascimento não pode ser no futuro");
+        this.dataNascimento = dataNascimento;
+    }
+
+    public void setCep(String cep) {
+        if (cep == null || cep.isBlank()) throw new ExcecaoDominio("CEP é obrigatório");
+        this.cep = cep;
+    }
+
+    public void setLogradouro(String logradouro) { this.logradouro = logradouro != null ? logradouro : ""; }
+    public void setBairro(String bairro)         { this.bairro = bairro; }
+    public void setCidade(String cidade)         { this.cidade = cidade; }
+    public void setEstado(String estado)         { this.estado = estado; }
+    public void setComplemento(String complemento) { this.complemento = complemento; }
+    public void setNumero(String numero)         { this.numero = numero; }
+
+    public void setLogin(String login) {
+        if (login == null || login.isBlank()) throw new ExcecaoDominio("Login é obrigatório");
+        if (login.length() != 7 || !login.matches("[a-z]{7}"))
+            throw new ExcecaoDominio("Login deve ter exatamente 7 letras minúsculas");
+        this.login = login;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -70,132 +157,5 @@ public class Pessoa {
     @Override
     public int hashCode() {
         return Objects.hash(id);
-    }
-
-    public static class Builder {
-        private UUID id;
-        private String nomeCompleto;
-        private String cpf;
-        private String email;
-        private LocalDate dataNascimento;
-        private String cep;
-        private String logradouro;
-        private String bairro;
-        private String cidade;
-        private String estado;
-        private String complemento;
-        private String numero;
-        private String login;
-        private LocalDateTime criadoEm = LocalDateTime.now();
-
-        public Builder id(UUID id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder nomeCompleto(String nomeCompleto) {
-            this.nomeCompleto = validarNomeCompleto(nomeCompleto);
-            return this;
-        }
-
-        public Builder cpf(String cpf) {
-            this.cpf = Objects.requireNonNull(cpf, "CPF é obrigatório");
-            return this;
-        }
-
-        public Builder email(String email) {
-            this.email = validarEmail(email);
-            return this;
-        }
-
-        public Builder dataNascimento(LocalDate dataNascimento) {
-            this.dataNascimento = validarDataNascimento(dataNascimento);
-            return this;
-        }
-
-        public Builder cep(String cep) {
-            this.cep = cep;
-            return this;
-        }
-
-        public Builder logradouro(String logradouro) {
-            this.logradouro = logradouro;
-            return this;
-        }
-
-        public Builder bairro(String bairro) {
-            this.bairro = bairro;
-            return this;
-        }
-
-        public Builder cidade(String cidade) {
-            this.cidade = cidade;
-            return this;
-        }
-
-        public Builder estado(String estado) {
-            this.estado = estado;
-            return this;
-        }
-
-        public Builder complemento(String complemento) {
-            this.complemento = complemento;
-            return this;
-        }
-
-        public Builder numero(String numero) {
-            this.numero = numero;
-            return this;
-        }
-
-        public Builder login(String login) {
-            this.login = Objects.requireNonNull(login, "Login é obrigatório");
-            return this;
-        }
-
-        public Builder criadoEm(LocalDateTime criadoEm) {
-            this.criadoEm = criadoEm;
-            return this;
-        }
-
-        public Pessoa build() {
-            Objects.requireNonNull(id, "Id é obrigatório");
-            Objects.requireNonNull(login, "Login é obrigatório");
-            return new Pessoa(this);
-        }
-
-        private String validarNomeCompleto(String nome) {
-            if (nome == null || nome.isBlank()) {
-                throw new ExcecaoDominio("Nome completo é obrigatório");
-            }
-            String normalizado = nome.trim().replaceAll("\\s+", " ");
-            if (!normalizado.matches("[a-zA-Z ]+")) {
-                throw new ExcecaoDominio("Nome completo deve conter apenas letras e espaços (sem acentos ou caracteres especiais)");
-            }
-            if (normalizado.split(" ").length < 2) {
-                throw new ExcecaoDominio("Nome completo deve conter pelo menos nome e sobrenome");
-            }
-            return normalizado;
-        }
-
-        private String validarEmail(String email) {
-            if (email == null || email.isBlank()) {
-                throw new ExcecaoDominio("E-mail é obrigatório");
-            }
-            if (!email.matches("^[\\w._%+\\-]+@[\\w.\\-]+\\.[a-zA-Z]{2,}$")) {
-                throw new ExcecaoDominio("Formato de e-mail inválido");
-            }
-            return email.toLowerCase().trim();
-        }
-
-        private LocalDate validarDataNascimento(LocalDate data) {
-            if (data == null) {
-                throw new ExcecaoDominio("Data de nascimento é obrigatória");
-            }
-            if (data.isAfter(LocalDate.now())) {
-                throw new ExcecaoDominio("Data de nascimento não pode ser no futuro");
-            }
-            return data;
-        }
     }
 }

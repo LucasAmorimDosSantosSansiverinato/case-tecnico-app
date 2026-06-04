@@ -12,23 +12,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PessoaTest {
 
-    private Pessoa.Builder builderValido() {
-        return Pessoa.builder()
-                .id(UUID.randomUUID())
-                .nomeCompleto("Maria Silva")
-                .cpf("52998224725")
-                .email("maria@example.com")
-                .dataNascimento(LocalDate.of(1990, 1, 1))
-                .cep("01310100")
-                .logradouro("Avenida Paulista")
-                .cidade("Sao Paulo")
-                .estado("SP")
-                .login("msilvaa");
+    // Cria uma Pessoa com todos os campos válidos para servir de base nos testes
+    private Pessoa pessoaValida() {
+        return new Pessoa(
+                UUID.randomUUID(), "Maria Silva", "52998224725", "maria@example.com",
+                LocalDate.of(1990, 1, 1), "01310100", "Avenida Paulista",
+                "Bela Vista", "Sao Paulo", "SP", null, "100", "msilvaa", null
+        );
     }
 
     @Test
     void deveCriarPessoaValida() {
-        Pessoa pessoa = builderValido().build();
+        Pessoa pessoa = pessoaValida();
         assertNotNull(pessoa.getId());
         assertEquals("Maria Silva", pessoa.getNomeCompleto());
         assertEquals("maria@example.com", pessoa.getEmail());
@@ -37,125 +32,187 @@ class PessoaTest {
 
     @Test
     void deveRejeitarNomeCompletoVazio() {
-        assertThrows(ExcecaoDominio.class, () -> builderValido().nomeCompleto("").build());
+        assertThrows(ExcecaoDominio.class, () -> new Pessoa(
+                UUID.randomUUID(), "", "52998224725", "maria@example.com",
+                LocalDate.of(1990, 1, 1), "01310100", "Av Paulista",
+                null, "Sao Paulo", "SP", null, null, "msilvaa", null
+        ));
     }
 
     @Test
     void deveRejeitarNomeCompletoNulo() {
-        assertThrows(ExcecaoDominio.class, () -> builderValido().nomeCompleto(null).build());
+        assertThrows(ExcecaoDominio.class, () -> new Pessoa(
+                UUID.randomUUID(), null, "52998224725", "maria@example.com",
+                LocalDate.of(1990, 1, 1), "01310100", "Av Paulista",
+                null, "Sao Paulo", "SP", null, null, "msilvaa", null
+        ));
     }
 
     @Test
     void deveRejeitarNomeCompletoSemSobrenome() {
-        assertThrows(ExcecaoDominio.class, () -> builderValido().nomeCompleto("Maria").build());
+        assertThrows(ExcecaoDominio.class, () -> new Pessoa(
+                UUID.randomUUID(), "Maria", "52998224725", "maria@example.com",
+                LocalDate.of(1990, 1, 1), "01310100", "Av Paulista",
+                null, "Sao Paulo", "SP", null, null, "msilvaa", null
+        ));
     }
 
     @Test
     void deveRejeitarNomeCompletoComNumeros() {
-        assertThrows(ExcecaoDominio.class, () -> builderValido().nomeCompleto("Maria123 Silva").build());
+        assertThrows(ExcecaoDominio.class, () -> new Pessoa(
+                UUID.randomUUID(), "Maria123 Silva", "52998224725", "maria@example.com",
+                LocalDate.of(1990, 1, 1), "01310100", "Av Paulista",
+                null, "Sao Paulo", "SP", null, null, "msilvaa", null
+        ));
     }
 
     @Test
     void deveRejeitarNomeCompletoComCaracteresEspeciais() {
-        assertThrows(ExcecaoDominio.class, () -> builderValido().nomeCompleto("Maria@ Silva").build());
+        assertThrows(ExcecaoDominio.class, () -> new Pessoa(
+                UUID.randomUUID(), "Maria@ Silva", "52998224725", "maria@example.com",
+                LocalDate.of(1990, 1, 1), "01310100", "Av Paulista",
+                null, "Sao Paulo", "SP", null, null, "msilvaa", null
+        ));
     }
 
     @Test
     void deveNormalizarEspacosNoNomeCompleto() {
-        Pessoa pessoa = builderValido().nomeCompleto("  Maria   Silva  ").build();
+        Pessoa pessoa = new Pessoa(
+                UUID.randomUUID(), "  Maria   Silva  ", "52998224725", "maria@example.com",
+                LocalDate.of(1990, 1, 1), "01310100", "Av Paulista",
+                null, "Sao Paulo", "SP", null, null, "msilvaa", null
+        );
         assertEquals("Maria Silva", pessoa.getNomeCompleto());
     }
 
     @Test
     void deveRejeitarEmailVazio() {
-        assertThrows(ExcecaoDominio.class, () -> builderValido().email("").build());
+        assertThrows(ExcecaoDominio.class, () -> new Pessoa(
+                UUID.randomUUID(), "Maria Silva", "52998224725", "",
+                LocalDate.of(1990, 1, 1), "01310100", "Av Paulista",
+                null, "Sao Paulo", "SP", null, null, "msilvaa", null
+        ));
     }
 
     @Test
     void deveRejeitarEmailNulo() {
-        assertThrows(ExcecaoDominio.class, () -> builderValido().email(null).build());
+        assertThrows(ExcecaoDominio.class, () -> new Pessoa(
+                UUID.randomUUID(), "Maria Silva", "52998224725", null,
+                LocalDate.of(1990, 1, 1), "01310100", "Av Paulista",
+                null, "Sao Paulo", "SP", null, null, "msilvaa", null
+        ));
     }
 
     @Test
     void deveRejeitarEmailInvalido() {
-        assertThrows(ExcecaoDominio.class, () -> builderValido().email("naoemail").build());
-        assertThrows(ExcecaoDominio.class, () -> builderValido().email("faltando@dominio").build());
+        assertThrows(ExcecaoDominio.class, () -> new Pessoa(
+                UUID.randomUUID(), "Maria Silva", "52998224725", "naoemail",
+                LocalDate.of(1990, 1, 1), "01310100", "Av Paulista",
+                null, "Sao Paulo", "SP", null, null, "msilvaa", null
+        ));
+        assertThrows(ExcecaoDominio.class, () -> new Pessoa(
+                UUID.randomUUID(), "Maria Silva", "52998224725", "faltando@dominio",
+                LocalDate.of(1990, 1, 1), "01310100", "Av Paulista",
+                null, "Sao Paulo", "SP", null, null, "msilvaa", null
+        ));
     }
 
     @Test
     void deveConverterEmailParaMinusculo() {
-        Pessoa pessoa = builderValido().email("Maria@Example.COM").build();
+        Pessoa pessoa = new Pessoa(
+                UUID.randomUUID(), "Maria Silva", "52998224725", "Maria@Example.COM",
+                LocalDate.of(1990, 1, 1), "01310100", "Av Paulista",
+                null, "Sao Paulo", "SP", null, null, "msilvaa", null
+        );
         assertEquals("maria@example.com", pessoa.getEmail());
     }
 
     @Test
     void deveRejeitarDataNascimentoNula() {
-        assertThrows(ExcecaoDominio.class, () -> builderValido().dataNascimento(null).build());
+        assertThrows(ExcecaoDominio.class, () -> new Pessoa(
+                UUID.randomUUID(), "Maria Silva", "52998224725", "maria@example.com",
+                null, "01310100", "Av Paulista",
+                null, "Sao Paulo", "SP", null, null, "msilvaa", null
+        ));
     }
 
     @Test
     void deveRejeitarDataNascimentoFutura() {
-        assertThrows(ExcecaoDominio.class, () ->
-                builderValido().dataNascimento(LocalDate.now().plusDays(1)).build());
+        assertThrows(ExcecaoDominio.class, () -> new Pessoa(
+                UUID.randomUUID(), "Maria Silva", "52998224725", "maria@example.com",
+                LocalDate.now().plusDays(1), "01310100", "Av Paulista",
+                null, "Sao Paulo", "SP", null, null, "msilvaa", null
+        ));
     }
 
     @Test
     void deveAceitarDataNascimentoHoje() {
-        assertDoesNotThrow(() -> builderValido().dataNascimento(LocalDate.now()).build());
+        assertDoesNotThrow(() -> new Pessoa(
+                UUID.randomUUID(), "Maria Silva", "52998224725", "maria@example.com",
+                LocalDate.now(), "01310100", "Av Paulista",
+                null, "Sao Paulo", "SP", null, null, "msilvaa", null
+        ));
     }
 
     @Test
     void deveRejeitarCpfNulo() {
-        assertThrows(RuntimeException.class, () -> builderValido().cpf(null).build());
+        assertThrows(ExcecaoDominio.class, () -> new Pessoa(
+                UUID.randomUUID(), "Maria Silva", null, "maria@example.com",
+                LocalDate.of(1990, 1, 1), "01310100", "Av Paulista",
+                null, "Sao Paulo", "SP", null, null, "msilvaa", null
+        ));
     }
 
     @Test
     void deveRejeitarLoginNulo() {
-        assertThrows(RuntimeException.class, () -> builderValido().login(null).build());
+        assertThrows(ExcecaoDominio.class, () -> new Pessoa(
+                UUID.randomUUID(), "Maria Silva", "52998224725", "maria@example.com",
+                LocalDate.of(1990, 1, 1), "01310100", "Av Paulista",
+                null, "Sao Paulo", "SP", null, null, null, null
+        ));
     }
 
     @Test
     void deveRejeitarIdNulo() {
-        assertThrows(RuntimeException.class, () ->
-                Pessoa.builder()
-                        .nomeCompleto("Maria Silva")
-                        .cpf("52998224725")
-                        .email("maria@example.com")
-                        .dataNascimento(LocalDate.of(1990, 1, 1))
-                        .cep("01310100")
-                        .logradouro("Av Paulista")
-                        .cidade("SP")
-                        .estado("SP")
-                        .login("msilvaa")
-                        .build());
+        assertThrows(ExcecaoDominio.class, () -> new Pessoa(
+                null, "Maria Silva", "52998224725", "maria@example.com",
+                LocalDate.of(1990, 1, 1), "01310100", "Av Paulista",
+                null, "Sao Paulo", "SP", null, null, "msilvaa", null
+        ));
     }
 
     @Test
     void deveSuportarCriadoEmPersonalizado() {
         LocalDateTime tempo = LocalDateTime.of(2024, 6, 1, 12, 0);
-        Pessoa pessoa = builderValido().criadoEm(tempo).build();
+        Pessoa pessoa = new Pessoa(
+                UUID.randomUUID(), "Maria Silva", "52998224725", "maria@example.com",
+                LocalDate.of(1990, 1, 1), "01310100", "Av Paulista",
+                null, "Sao Paulo", "SP", null, null, "msilvaa", tempo
+        );
         assertEquals(tempo, pessoa.getCriadoEm());
     }
 
     @Test
     void pessoasComMesmoIdSaoIguais() {
         UUID id = UUID.randomUUID();
-        Pessoa p1 = builderValido().id(id).build();
-        Pessoa p2 = builderValido().id(id).build();
+        Pessoa p1 = new Pessoa(id, "Maria Silva", "52998224725", "maria@example.com",
+                LocalDate.of(1990, 1, 1), "01310100", "Av Paulista", null, "Sao Paulo", "SP", null, null, "msilvaa", null);
+        Pessoa p2 = new Pessoa(id, "Maria Silva", "52998224725", "maria@example.com",
+                LocalDate.of(1990, 1, 1), "01310100", "Av Paulista", null, "Sao Paulo", "SP", null, null, "msilvaa", null);
         assertEquals(p1, p2);
         assertEquals(p1.hashCode(), p2.hashCode());
     }
 
     @Test
     void pessoasComIdsDiferentesNaoSaoIguais() {
-        Pessoa p1 = builderValido().id(UUID.randomUUID()).build();
-        Pessoa p2 = builderValido().id(UUID.randomUUID()).build();
+        Pessoa p1 = pessoaValida();
+        Pessoa p2 = pessoaValida();
         assertNotEquals(p1, p2);
     }
 
     @Test
     void naoDeveSerIgualAObjetoNaoPessoa() {
-        Pessoa pessoa = builderValido().build();
+        Pessoa pessoa = pessoaValida();
         assertNotEquals(pessoa, "nao e uma pessoa");
     }
 }

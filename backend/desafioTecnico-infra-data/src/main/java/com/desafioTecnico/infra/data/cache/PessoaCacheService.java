@@ -3,67 +3,136 @@ package com.desafioTecnico.infra.data.cache;
 import com.desafioTecnico.application.dto.PessoaDto;
 import com.desafioTecnico.application.mediator.command.CommandCadastrarPessoa;
 import com.desafioTecnico.application.mediator.handler.HandlerCadastrarPessoa;
-import com.desafioTecnico.application.mediator.handler.HandlerQueryPorId;
-import com.desafioTecnico.application.mediator.handler.HandlerQueryPorLogin;
+import com.desafioTecnico.application.mediator.handler.HandlerQueryPessoa;
 import com.desafioTecnico.application.mediator.handler.HandlerTodasPessoas;
-import com.desafioTecnico.application.mediator.query.QueryPessoaPorId;
-import com.desafioTecnico.application.mediator.query.QueryPessoaPorLogin;
+import com.desafioTecnico.application.mediator.query.QueryPessoa;
 import com.desafioTecnico.application.mediator.query.QueryTodasPessoas;
+import com.desafioTecnico.domain.entidade.Pessoa;
+import com.desafioTecnico.domain.excecao.ExcecaoDominio;
+import com.desafioTecnico.domain.interface_.IRepositorioPessoa;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Semaphore;
 
 @Service
 public class PessoaCacheService {
 
     private static final Logger log = LoggerFactory.getLogger(PessoaCacheService.class);
 
+    // Garante que apenas um thread por vez escreve no cache, evitando duplicidade
+    private final Semaphore cacheLock = new Semaphore(1, true);
+
+    private final ConcurrentHashMap<UUID, PessoaDto> cachePorId = new ConcurrentHashMap<>();
+    private volatile List<PessoaDto> cacheTodos = null;
+
     private final HandlerCadastrarPessoa manipuladorCadastrar;
-    private final HandlerQueryPorId manipuladorPorId;
-    private final HandlerQueryPorLogin manipuladorPorLogin;
+    private final HandlerQueryPessoa manipuladorQuery;
     private final HandlerTodasPessoas manipuladorTodos;
+    // Acesso direto ao repositório exclusivamente para autenticação por login
+    private final IRepositorioPessoa repositorioPessoa;
 
     public PessoaCacheService(
             HandlerCadastrarPessoa manipuladorCadastrar,
-            HandlerQueryPorId manipuladorPorId,
-            HandlerQueryPorLogin manipuladorPorLogin,
-            HandlerTodasPessoas manipuladorTodos
+            HandlerQueryPessoa manipuladorQuery,
+            HandlerTodasPessoas manipuladorTodos,
+            IRepositorioPessoa repositorioPessoa
     ) {
         this.manipuladorCadastrar = manipuladorCadastrar;
-        this.manipuladorPorId = manipuladorPorId;
-        this.manipuladorPorLogin = manipuladorPorLogin;
+        this.manipuladorQuery = manipuladorQuery;
         this.manipuladorTodos = manipuladorTodos;
+        this.repositorioPessoa = repositorioPessoa;
     }
 
-    @Caching(evict = {
-        @CacheEvict(value = "persons-all", allEntries = true),
-        @CacheEvict(value = "persons-by-id", allEntries = true)
-    })
+    // Busca por login — usado apenas para autenticação, sem cache intencional
+    public Pessoa buscarPorLogin(String login) {
+        return repositorioPessoa.buscarPorLogin(login)
+                .orElseThrow(() -> new ExcecaoDominio("Login não encontrado: " + login));
+    }
+
     public PessoaDto cadastrar(CommandCadastrarPessoa comando) {
-        log.info("[CACHE] Evictando cache de pessoas após novo cadastro");
-        return manipuladorCadastrar.handle(comando);
+        PessoaDto resultado = manipuladorCadastrar.handle(comando);
+
+        // Adiciona o novo cadastro aos caches existentes sem remover os anteriores
+        inserirNoCacheComLock(resultado);
+        return resultado;
     }
 
-    @Cacheable(value = "persons-by-id", key = "#consulta.id()")
-    public PessoaDto buscarPorId(QueryPessoaPorId consulta) {
-        log.info("[CACHE] Cache miss para pessoa id={}", consulta.id());
-        return manipuladorPorId.handle(consulta);
+    public PessoaDto buscarPorId(QueryPessoa consulta) {
+        UUID id = UUID.fromString(consulta.getId());
+        PessoaDto emCache = cachePorId.get(id);
+        if (emCache != null) {
+            log.info("[CACHE] Hit por id={}", consulta.getId());
+            return emCache;
+        }
+
+        log.info("[CACHE] Miss por id={} — consultando banco", consulta.getId());
+        PessoaDto resultado = manipuladorQuery.handle(consulta);
+
+        try {
+            cacheLock.acquire();
+            try {
+                cachePorId.put(id, resultado);
+            } finally {
+                cacheLock.release();
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            log.warn("[CACHE] Interrompido ao inserir por id");
+        }
+
+        return resultado;
     }
 
-    @Cacheable(value = "persons-by-login", key = "#consulta.login()")
-    public PessoaDto buscarPorLogin(QueryPessoaPorLogin consulta) {
-        log.info("[CACHE] Cache miss para login={}", consulta.login());
-        return manipuladorPorLogin.handle(consulta);
-    }
-
-    @Cacheable(value = "persons-all")
     public List<PessoaDto> listarTodos(QueryTodasPessoas consulta) {
-        log.info("[CACHE] Cache miss para lista de pessoas — consultando banco");
-        return manipuladorTodos.handle(consulta);
+        if (cacheTodos != null) {
+            log.info("[CACHE] Hit para lista de pessoas");
+            return cacheTodos;
+        }
+
+        log.info("[CACHE] Miss para lista de pessoas — consultando banco");
+        List<PessoaDto> resultado = manipuladorTodos.handle(consulta);
+
+        try {
+            cacheLock.acquire();
+            try {
+                // Double-check para evitar sobrescrever cache já populado por outro thread
+                if (cacheTodos == null) {
+                    cacheTodos = resultado;
+                }
+            } finally {
+                cacheLock.release();
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            log.warn("[CACHE] Interrompido ao inserir lista");
+        }
+
+        return resultado;
+    }
+
+    private void inserirNoCacheComLock(PessoaDto pessoa) {
+        try {
+            cacheLock.acquire();
+            try {
+                cachePorId.put(UUID.fromString(pessoa.getId()), pessoa);
+
+                // Se a lista já estava em cache, soma o novo registro sem descartar os anteriores
+                if (cacheTodos != null) {
+                    List<PessoaDto> atualizada = new java.util.ArrayList<>(cacheTodos);
+                    atualizada.add(pessoa);
+                    cacheTodos = atualizada;
+                }
+            } finally {
+                cacheLock.release();
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            log.warn("[CACHE] Interrompido ao inserir após cadastro");
+        }
     }
 }

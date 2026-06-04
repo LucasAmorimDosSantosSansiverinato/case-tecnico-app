@@ -1,12 +1,6 @@
-com\desafioTecnico\application\mediator\handler\HandlerQueryPorId.class
-com\desafioTecnico\application\interface_\IPortaGeradorLogin.class
 com\desafioTecnico\application\dto\EnderecoDto.class
 com\desafioTecnico\application\mediator\command\CommandCadastrarPessoa.class
 com\desafioTecnico\application\dto\PessoaDto.class
 com\desafioTecnico\application\mediator\query\QueryTodasPessoas.class
-com\desafioTecnico\application\mediator\query\QueryPessoaPorLogin.class
-com\desafioTecnico\application\interface_\IPortaServicoEndereco.class
 com\desafioTecnico\application\mediator\handler\HandlerCadastrarPessoa.class
 com\desafioTecnico\application\mediator\handler\HandlerTodasPessoas.class
-com\desafioTecnico\application\mediator\handler\HandlerQueryPorLogin.class
-com\desafioTecnico\application\mediator\query\QueryPessoaPorId.class

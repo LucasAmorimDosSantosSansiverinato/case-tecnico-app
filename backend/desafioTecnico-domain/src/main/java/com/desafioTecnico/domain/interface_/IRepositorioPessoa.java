@@ -16,11 +16,11 @@ public interface IRepositorioPessoa {
 
     Optional<Pessoa> buscarPorEmail(String email);
 
+    Optional<Pessoa> buscarPorLogin(String login);
+
     boolean existePorLogin(String login);
 
     List<String> listarTodosLogins();
-
-    Optional<Pessoa> buscarPorLogin(String login);
 
     List<Pessoa> listarTodos();
 }

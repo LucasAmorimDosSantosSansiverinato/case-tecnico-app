@@ -1,12 +1,11 @@
-C:\Users\Lucas\GITHUB\case-tecnico-app\backend\desafioTecnico-application\src\main\java\com\desafioTecnico\application\mediator\command\CommandCadastrarPessoa.java
-C:\Users\Lucas\GITHUB\case-tecnico-app\backend\desafioTecnico-application\src\main\java\com\desafioTecnico\application\dto\EnderecoDto.java
-C:\Users\Lucas\GITHUB\case-tecnico-app\backend\desafioTecnico-application\src\main\java\com\desafioTecnico\application\dto\PessoaDto.java
-C:\Users\Lucas\GITHUB\case-tecnico-app\backend\desafioTecnico-application\src\main\java\com\desafioTecnico\application\mediator\handler\HandlerCadastrarPessoa.java
-C:\Users\Lucas\GITHUB\case-tecnico-app\backend\desafioTecnico-application\src\main\java\com\desafioTecnico\application\mediator\handler\HandlerQueryPorId.java
-C:\Users\Lucas\GITHUB\case-tecnico-app\backend\desafioTecnico-application\src\main\java\com\desafioTecnico\application\interface_\IPortaGeradorLogin.java
-C:\Users\Lucas\GITHUB\case-tecnico-app\backend\desafioTecnico-application\src\main\java\com\desafioTecnico\application\mediator\query\QueryPessoaPorLogin.java
-C:\Users\Lucas\GITHUB\case-tecnico-app\backend\desafioTecnico-application\src\main\java\com\desafioTecnico\application\interface_\IPortaServicoEndereco.java
-C:\Users\Lucas\GITHUB\case-tecnico-app\backend\desafioTecnico-application\src\main\java\com\desafioTecnico\application\mediator\query\QueryTodasPessoas.java
-C:\Users\Lucas\GITHUB\case-tecnico-app\backend\desafioTecnico-application\src\main\java\com\desafioTecnico\application\mediator\handler\HandlerQueryPorLogin.java
-C:\Users\Lucas\GITHUB\case-tecnico-app\backend\desafioTecnico-application\src\main\java\com\desafioTecnico\application\mediator\handler\HandlerTodasPessoas.java
-C:\Users\Lucas\GITHUB\case-tecnico-app\backend\desafioTecnico-application\src\main\java\com\desafioTecnico\application\mediator\query\QueryPessoaPorId.java
+C:\Users\Lucas\GITHUB\Case tecnico\case-tecnico-app\backend\desafioTecnico-application\src\main\java\com\desafioTecnico\application\mediator\command\CommandCadastrarPessoa.java
+C:\Users\Lucas\GITHUB\Case tecnico\case-tecnico-app\backend\desafioTecnico-application\src\main\java\com\desafioTecnico\application\mediator\handler\HandlerQueryPessoa.java
+C:\Users\Lucas\GITHUB\Case tecnico\case-tecnico-app\backend\desafioTecnico-application\src\main\java\com\desafioTecnico\application\dto\EnderecoDto.java
+C:\Users\Lucas\GITHUB\Case tecnico\case-tecnico-app\backend\desafioTecnico-application\src\main\java\com\desafioTecnico\application\dto\PessoaDto.java
+C:\Users\Lucas\GITHUB\Case tecnico\case-tecnico-app\backend\desafioTecnico-application\src\main\java\com\desafioTecnico\application\mediator\query\QueryPessoa.java
+C:\Users\Lucas\GITHUB\Case tecnico\case-tecnico-app\backend\desafioTecnico-application\src\main\java\com\desafioTecnico\application\mediator\handler\HandlerCadastrarPessoa.java
+C:\Users\Lucas\GITHUB\Case tecnico\case-tecnico-app\backend\desafioTecnico-application\src\main\java\com\desafioTecnico\application\interfaces\IPortaServicoEndereco.java
+C:\Users\Lucas\GITHUB\Case tecnico\case-tecnico-app\backend\desafioTecnico-application\src\main\java\com\desafioTecnico\application\mediator\handler\HandlerTodasPessoas.java
+C:\Users\Lucas\GITHUB\Case tecnico\case-tecnico-app\backend\desafioTecnico-application\src\main\java\com\desafioTecnico\application\interfaces\IPortaValidadorCpf.java
+C:\Users\Lucas\GITHUB\Case tecnico\case-tecnico-app\backend\desafioTecnico-application\src\main\java\com\desafioTecnico\application\mediator\query\QueryTodasPessoas.java
+C:\Users\Lucas\GITHUB\Case tecnico\case-tecnico-app\backend\desafioTecnico-application\src\main\java\com\desafioTecnico\application\interfaces\IPortaGeradorLogin.java

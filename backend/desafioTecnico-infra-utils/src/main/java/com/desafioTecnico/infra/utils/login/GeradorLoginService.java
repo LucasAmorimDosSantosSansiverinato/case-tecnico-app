@@ -1,6 +1,6 @@
 package com.desafioTecnico.infra.utils.login;
 
-import com.desafioTecnico.application.interface_.IPortaGeradorLogin;
+import com.desafioTecnico.application.interfaces.IPortaGeradorLogin;
 import com.desafioTecnico.domain.excecao.ExcecaoDominio;
 import org.springframework.stereotype.Service;
 

@@ -12,8 +12,12 @@
 
     <artifactId>desafioTecnico-domain</artifactId>
 
-    <!-- Domain has NO dependencies on other layers or Spring -->
     <dependencies>
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>

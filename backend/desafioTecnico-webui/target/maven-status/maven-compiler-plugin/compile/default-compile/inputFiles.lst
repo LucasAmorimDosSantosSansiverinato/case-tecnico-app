@@ -1,8 +1,3 @@
-C:\Users\Lucas\GITHUB\case-tecnico-app\backend\desafioTecnico-webui\src\main\java\com\desafioTecnico\webui\excecao\HandlerExcecaoGlobal.java
-C:\Users\Lucas\GITHUB\case-tecnico-app\backend\desafioTecnico-webui\src\main\java\com\desafioTecnico\webui\Application.java
-C:\Users\Lucas\GITHUB\case-tecnico-app\backend\desafioTecnico-webui\src\main\java\com\desafioTecnico\webui\controller\PersonController.java
-C:\Users\Lucas\GITHUB\case-tecnico-app\backend\desafioTecnico-webui\src\main\java\com\desafioTecnico\webui\dto\RequisicaoCadastro.java
-C:\Users\Lucas\GITHUB\case-tecnico-app\backend\desafioTecnico-webui\src\main\java\com\desafioTecnico\webui\config\CacheConfig.java
-C:\Users\Lucas\GITHUB\case-tecnico-app\backend\desafioTecnico-webui\src\main\java\com\desafioTecnico\webui\controller\AddressController.java
-C:\Users\Lucas\GITHUB\case-tecnico-app\backend\desafioTecnico-webui\src\main\java\com\desafioTecnico\webui\config\CorsConfig.java
-C:\Users\Lucas\GITHUB\case-tecnico-app\backend\desafioTecnico-webui\src\main\java\com\desafioTecnico\webui\config\ApplicationConfig.java
+C:\Users\Lucas\GITHUB\Case tecnico\case-tecnico-app\backend\desafioTecnico-webui\src\main\java\com\desafioTecnico\webui\controller\PersonController.java
+C:\Users\Lucas\GITHUB\Case tecnico\case-tecnico-app\backend\desafioTecnico-webui\src\main\java\com\desafioTecnico\webui\security\ServiceTokenFilter.java
+C:\Users\Lucas\GITHUB\Case tecnico\case-tecnico-app\backend\desafioTecnico-webui\src\main\java\com\desafioTecnico\webui\Application.java

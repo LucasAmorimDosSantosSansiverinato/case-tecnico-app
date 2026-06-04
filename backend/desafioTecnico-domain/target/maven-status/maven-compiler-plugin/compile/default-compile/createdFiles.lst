@@ -1,4 +1,3 @@
-com\desafioTecnico\domain\entidade\Pessoa$Builder.class
 com\desafioTecnico\domain\excecao\ExcecaoDominio.class
 com\desafioTecnico\domain\entidade\Pessoa.class
 com\desafioTecnico\domain\interface_\IRepositorioPessoa.class

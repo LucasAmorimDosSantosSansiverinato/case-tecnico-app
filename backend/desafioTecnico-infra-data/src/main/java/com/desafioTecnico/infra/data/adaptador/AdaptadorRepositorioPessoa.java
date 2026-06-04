@@ -2,48 +2,47 @@ package com.desafioTecnico.infra.data.adaptador;
 
 import com.desafioTecnico.domain.entidade.Pessoa;
 import com.desafioTecnico.domain.interface_.IRepositorioPessoa;
-import com.desafioTecnico.infra.data.contexto.ContextoPessoaJpa;
-import com.desafioTecnico.infra.data.entidade.EntidadePessoaJpa;
+import com.desafioTecnico.infra.data.context.ContextPessoaJpa;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+// Adaptador que implementa a interface de domínio delegando ao contexto JPA
 @Component
 public class AdaptadorRepositorioPessoa implements IRepositorioPessoa {
 
-    private final ContextoPessoaJpa contexto;
+    // Toda operação de banco (leitura ou escrita) passa pelo contexto
+    private final ContextPessoaJpa contexto;
 
-    public AdaptadorRepositorioPessoa(ContextoPessoaJpa contexto) {
+    public AdaptadorRepositorioPessoa(ContextPessoaJpa contexto) {
         this.contexto = contexto;
     }
 
     @Override
     public Pessoa salvar(Pessoa pessoa) {
-        EntidadePessoaJpa entidade = paraEntidade(pessoa);
-        EntidadePessoaJpa salva = contexto.save(entidade);
-        return paraDominio(salva);
+        return contexto.save(pessoa);
     }
 
     @Override
     public Optional<Pessoa> buscarPorId(UUID id) {
-        return contexto.findById(id).map(this::paraDominio);
+        return contexto.findById(id);
     }
 
     @Override
     public Optional<Pessoa> buscarPorCpf(String cpf) {
-        return contexto.findByCpf(cpf).map(this::paraDominio);
+        return contexto.findByCpf(cpf);
     }
 
     @Override
     public Optional<Pessoa> buscarPorEmail(String email) {
-        return contexto.findByEmail(email).map(this::paraDominio);
+        return contexto.findByEmail(email);
     }
 
     @Override
     public Optional<Pessoa> buscarPorLogin(String login) {
-        return contexto.findByLogin(login).map(this::paraDominio);
+        return contexto.findByLogin(login);
     }
 
     @Override
@@ -58,44 +57,6 @@ public class AdaptadorRepositorioPessoa implements IRepositorioPessoa {
 
     @Override
     public List<Pessoa> listarTodos() {
-        return contexto.findAll().stream().map(this::paraDominio).toList();
-    }
-
-    private EntidadePessoaJpa paraEntidade(Pessoa pessoa) {
-        EntidadePessoaJpa entidade = new EntidadePessoaJpa();
-        entidade.setId(pessoa.getId());
-        entidade.setNomeCompleto(pessoa.getNomeCompleto());
-        entidade.setCpf(pessoa.getCpf());
-        entidade.setEmail(pessoa.getEmail());
-        entidade.setDataNascimento(pessoa.getDataNascimento());
-        entidade.setCep(pessoa.getCep());
-        entidade.setLogradouro(pessoa.getLogradouro());
-        entidade.setBairro(pessoa.getBairro());
-        entidade.setCidade(pessoa.getCidade());
-        entidade.setEstado(pessoa.getEstado());
-        entidade.setComplemento(pessoa.getComplemento());
-        entidade.setNumero(pessoa.getNumero());
-        entidade.setLogin(pessoa.getLogin());
-        entidade.setCriadoEm(pessoa.getCriadoEm());
-        return entidade;
-    }
-
-    private Pessoa paraDominio(EntidadePessoaJpa entidade) {
-        return Pessoa.builder()
-                .id(entidade.getId())
-                .nomeCompleto(entidade.getNomeCompleto())
-                .cpf(entidade.getCpf())
-                .email(entidade.getEmail())
-                .dataNascimento(entidade.getDataNascimento())
-                .cep(entidade.getCep())
-                .logradouro(entidade.getLogradouro())
-                .bairro(entidade.getBairro())
-                .cidade(entidade.getCidade())
-                .estado(entidade.getEstado())
-                .complemento(entidade.getComplemento())
-                .numero(entidade.getNumero())
-                .login(entidade.getLogin())
-                .criadoEm(entidade.getCriadoEm())
-                .build();
+        return contexto.findAll();
     }
 }

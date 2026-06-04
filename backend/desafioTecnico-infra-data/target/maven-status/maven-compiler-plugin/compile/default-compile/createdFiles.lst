@@ -1,4 +1,2 @@
-com\desafioTecnico\infra\data\entidade\EntidadePessoaJpa.class
 com\desafioTecnico\infra\data\adaptador\AdaptadorRepositorioPessoa.class
-com\desafioTecnico\infra\data\contexto\ContextoPessoaJpa.class
 com\desafioTecnico\infra\data\cache\PessoaCacheService.class

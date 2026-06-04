@@ -1,24 +1,24 @@
 package com.desafioTecnico.application.dto;
 
-import com.desafioTecnico.domain.entidade.Pessoa;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class PessoaDto {
 
-    private final String id;
-    private final String nomeCompleto;
-    private final String cpf;
-    private final String email;
-    private final LocalDate dataNascimento;
-    private final EnderecoDto endereco;
-    private final String login;
-    private final LocalDateTime criadoEm;
+    private String id;
+    private String nomeCompleto;
+    private String cpf;
+    private String email;
+    private LocalDate dataNascimento;
+    private EnderecoDto endereco;
+    private String login;
+    private LocalDateTime criadoEm;
+
+    public PessoaDto() {}
 
     public PessoaDto(String id, String nomeCompleto, String cpf, String email,
-                           LocalDate dataNascimento, EnderecoDto endereco,
-                           String login, LocalDateTime criadoEm) {
+                     LocalDate dataNascimento, EnderecoDto endereco,
+                     String login, LocalDateTime criadoEm) {
         this.id = id;
         this.nomeCompleto = nomeCompleto;
         this.cpf = cpf;
@@ -29,41 +29,27 @@ public class PessoaDto {
         this.criadoEm = criadoEm;
     }
 
-    public static PessoaDto de(Pessoa pessoa) {
-        String cpfFormatado = formatarCpf(pessoa.getCpf());
-        EnderecoDto endereco = new EnderecoDto(
-                pessoa.getCep(),
-                pessoa.getLogradouro(),
-                pessoa.getBairro(),
-                pessoa.getCidade(),
-                pessoa.getEstado(),
-                pessoa.getComplemento(),
-                pessoa.getNumero()
-        );
-        return new PessoaDto(
-                pessoa.getId().toString(),
-                pessoa.getNomeCompleto(),
-                cpfFormatado,
-                pessoa.getEmail(),
-                pessoa.getDataNascimento(),
-                endereco,
-                pessoa.getLogin(),
-                pessoa.getCriadoEm()
-        );
-    }
+    public String getId()                              { return id; }
+    public void setId(String id)                       { this.id = id; }
 
-    private static String formatarCpf(String cpf) {
-        if (cpf == null || cpf.length() != 11) return cpf;
-        return cpf.substring(0, 3) + "." + cpf.substring(3, 6) + "." +
-               cpf.substring(6, 9) + "-" + cpf.substring(9, 11);
-    }
+    public String getNomeCompleto()                    { return nomeCompleto; }
+    public void setNomeCompleto(String nomeCompleto)   { this.nomeCompleto = nomeCompleto; }
 
-    public String getId()                       { return id; }
-    public String getNomeCompleto()             { return nomeCompleto; }
-    public String getCpf()                      { return cpf; }
-    public String getEmail()                    { return email; }
-    public LocalDate getDataNascimento()        { return dataNascimento; }
-    public EnderecoDto getEndereco()       { return endereco; }
-    public String getLogin()                    { return login; }
-    public LocalDateTime getCriadoEm()          { return criadoEm; }
+    public String getCpf()                             { return cpf; }
+    public void setCpf(String cpf)                     { this.cpf = cpf; }
+
+    public String getEmail()                           { return email; }
+    public void setEmail(String email)                 { this.email = email; }
+
+    public LocalDate getDataNascimento()               { return dataNascimento; }
+    public void setDataNascimento(LocalDate dataNascimento) { this.dataNascimento = dataNascimento; }
+
+    public EnderecoDto getEndereco()                   { return endereco; }
+    public void setEndereco(EnderecoDto endereco)      { this.endereco = endereco; }
+
+    public String getLogin()                           { return login; }
+    public void setLogin(String login)                 { this.login = login; }
+
+    public LocalDateTime getCriadoEm()                 { return criadoEm; }
+    public void setCriadoEm(LocalDateTime criadoEm)    { this.criadoEm = criadoEm; }
 }
